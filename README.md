@@ -1,2 +1,0 @@
-# HallPass
-Created with CodeSandbox
