@@ -8,7 +8,7 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
-
+import Typography from "@material-ui/core/Typography";
 import MenuItem from "@material-ui/core/MenuItem";
 
 import Select from "@material-ui/core/Select";
@@ -73,7 +73,7 @@ class Pass extends React.Component {
 
       this.setState({
         percent: (1 - distance / firstDistance) * 100,
-        timeLeft: minutes + " min " + seconds + " seconds till pass expires."
+        timeLeft: minutes + " min " + seconds + " sec"
       });
 
       // If the count down is over, write some text
@@ -103,77 +103,85 @@ class Pass extends React.Component {
     console.log(this.state.percent);
     return (
       <div className={classes.root}>
-        From: {this.state.fromTeacher}
-        <form className={classes.container} noValidate autoComplete="off">
-          <TextField
-            id="outlined-dense"
-            label="Full Name?"
-            className={classNames(classes.textField, classes.dense)}
-            margin="dense"
-            variant="outlined"
-          />
-          <br />
-          <br />
-          <FormControl variant="outlined" className={classes.textField}>
-            <InputLabel
-              ref={ref => {
-                this.InputLabelRef = ref;
-              }}
-              htmlFor="outlined-age-simple"
-            >
-              Destination?
-            </InputLabel>
-            <Select
-              value={this.state.destination}
-              onChange={this.handleSelect}
-              input={
-                <OutlinedInput
-                  labelWidth={this.state.labelWidth}
-                  name="Destination"
-                  id="outlined-age-simple"
-                />
-              }
-            >
-              <MenuItem value="">
-                <em>Bathroom</em>
-              </MenuItem>
-              <MenuItem value={10}>Office</MenuItem>
-              <MenuItem value={20}>Guidance</MenuItem>
-              <MenuItem value={30}>Media</MenuItem>
-            </Select>
-          </FormControl>
-          <br />
-          <br />
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            onClick={this.handleMakePass}
-          >
-            Make Pass
-          </Button>
-          <br />
-          <br />
-          <div className={classes.timeBar}>
-            {this.state.timeLeft}
-            {this.state.percent < 75 ? (
-              <LinearProgress
-                classes={{
-                  colorPrimary: classes.colorPrimary,
-                  barColorPrimary: classes.barColorPrimary
+        Pass from: {this.state.fromTeacher}'s room.
+        {!this.state.passMade ? (
+          <form className={classes.container} noValidate autoComplete="off">
+            <TextField
+              id="outlined-dense"
+              label="Full Name?"
+              className={classNames(classes.textField, classes.dense)}
+              margin="dense"
+              variant="outlined"
+              onChange={this.handleChange}
+            />
+            <br />
+            <br />
+            <FormControl variant="outlined" className={classes.textField}>
+              <InputLabel
+                ref={ref => {
+                  this.InputLabelRef = ref;
                 }}
-                variant="determinate"
-                value={this.state.percent}
-              />
-            ) : (
-              <LinearProgress
-                color="secondary"
-                variant="determinate"
-                value={87}
-              />
-            )}
+                htmlFor="outlined-age-simple"
+              >
+                Destination?
+              </InputLabel>
+              <Select
+                value={this.state.destination}
+                onChange={this.handleSelect}
+                input={
+                  <OutlinedInput
+                    labelWidth={this.state.labelWidth}
+                    name="Destination"
+                    id="outlined-age-simple"
+                  />
+                }
+              >
+                <MenuItem value={0}>Bathroom</MenuItem>
+                <MenuItem value={10}>Office</MenuItem>
+                <MenuItem value={20}>Guidance</MenuItem>
+                <MenuItem value={30}>Media</MenuItem>
+              </Select>
+            </FormControl>
+            <br />
+            <br />
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              onClick={this.handleMakePass}
+            >
+              Make Pass
+            </Button>
+            <br />
+            <br />
+          </form>
+        ) : (
+          <div>
+            Yupppp
+            <Typography variant="h3">{this.state.name}</Typography>
+            <Typography variant="h5">{this.state.destination}</Typography>
           </div>
-        </form>
+        )}
+        <div className={classes.timeBar}>
+          <Typography variant="h3">{this.state.timeLeft}</Typography>
+          <Typography variant="h5">till this pass expires.</Typography>
+          {this.state.percent < 75 ? (
+            <LinearProgress
+              classes={{
+                colorPrimary: classes.colorPrimary,
+                barColorPrimary: classes.barColorPrimary
+              }}
+              variant="determinate"
+              value={this.state.percent}
+            />
+          ) : (
+            <LinearProgress
+              color="secondary"
+              variant="determinate"
+              value={87}
+            />
+          )}
+        </div>
       </div>
     );
   }
