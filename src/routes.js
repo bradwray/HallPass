@@ -8,8 +8,8 @@ export default class Root extends React.Component {
     return (
       <BrowserRouter>
         <div>
-          <Route exact path="/" component={Pass} />
-          <Route exact path="/:key" component={Pass} />
+          <Route exact path="/:teacher" component={Pass} />
+          <Route exact path="/:teacher/:expires" component={Pass} />
         </div>
       </BrowserRouter>
     );
